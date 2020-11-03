@@ -113,7 +113,6 @@
 		27948579F28CB9D0D64482FB119B804F /* ScreenRecorder */ = {
 			isa = PBXGroup;
 			children = (
-				6C314F578AB303526E1E19A9B2FF9D8E /* ScreenRecorder.swift */,
 				D8253B0ADAFF9E40D2D7EFC7AC23A281 /* Ios10ScreenRecorder.swift */,
 				6CC403395D9AB7AEAD05CC67F5D3B4D3 /* Ios11ScreenRecorder.swift */,
 				C8AA02A75A7DD9049E3751E70E52BBB4 /* ReplayFileCoordinator.swift */,
@@ -248,6 +247,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
@@ -319,7 +319,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -499,7 +499,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";

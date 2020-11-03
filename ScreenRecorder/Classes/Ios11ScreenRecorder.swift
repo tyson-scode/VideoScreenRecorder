@@ -57,12 +57,12 @@ internal final class Ios11ScreenRecorder {
 			}
 
 			if CMSampleBufferDataIsReady(sample) {
-				if self.assetWriter.status == AVAssetWriterStatus.unknown {
+                if self.assetWriter.status == AVAssetWriter.Status.unknown {
 					self.assetWriter.startWriting()
 					self.assetWriter.startSession(atSourceTime: CMSampleBufferGetPresentationTimeStamp(sample))
 				}
 
-				if self.assetWriter.status == AVAssetWriterStatus.failed {
+                if self.assetWriter.status == AVAssetWriter.Status.failed {
 					print("Error occured, status = \(self.assetWriter.status.rawValue), \(self.assetWriter.error!.localizedDescription) \(String(describing: self.assetWriter.error))")
 					return
 				}

@@ -47,7 +47,7 @@ internal final class Ios10ScreenRecorder {
 		self.setupWriter(with: fileName, escapeWindows: escapeWindows, startHandler: startHandler, completionHandler: completionHandler)
 		self.isRecording = self.videoWriter!.status == .writing
 		self.displayLink = CADisplayLink(target: self, selector: #selector(writeVideoFrame))
-		self.displayLink?.add(to: RunLoop.main, forMode: .commonModes)
+        self.displayLink?.add(to: RunLoop.main, forMode: RunLoop.Mode.common)
 	}
 
 	func stopRecording(completion: ((URL?, Error?) -> Void)? = nil) {
@@ -56,7 +56,7 @@ internal final class Ios10ScreenRecorder {
 			return
 		}
 		self.isRecording = false
-		self.displayLink?.remove(from: RunLoop.main, forMode: .commonModes)
+        self.displayLink?.remove(from: RunLoop.main, forMode: RunLoop.Mode.common)
 		self.completeRecordingSession(completion: completion)
 	}
 
@@ -143,7 +143,7 @@ internal final class Ios10ScreenRecorder {
 				self.firstTimeStamp = self.displayLink.timestamp
 			}
 			let elapsed: CFTimeInterval = self.displayLink.timestamp - self.firstTimeStamp!
-			let time = CMTimeMakeWithSeconds(elapsed, 1000)
+            let time = CMTimeMakeWithSeconds(elapsed, preferredTimescale: 1000)
 
 			var unmanagedPixelBuffer: CVPixelBuffer? = nil
 			let bitmapContext = self.createPixelBufferAndBitmapContext(pixelBuffer: &unmanagedPixelBuffer)
