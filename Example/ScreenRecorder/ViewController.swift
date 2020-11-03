@@ -32,35 +32,64 @@ final class ViewController: UIViewController {
 			self.stopButtonWindow.hide()
 		}
 	}
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if let event = event, event.subtype == .motionShake {
+            
+            // Start recording, the framework will internally choose the most appropriate method to record the video. If iOS 11+ will relly on
+            // ReplayKit, if prior version will take a batch of screenshots and use them to encode the video.
+            //
+            // The 'startHandler' callback is called as soon as the Framework has successfully started to record video; for instance right after
+            // the user has granted the permission. It may never be called if recording doesn't start successfully.
+            //
+            // The 'completionHandler' callbak is called if there is an error (possibly immediately upon trying to start recording, e.g. if user
+            // denies the permission). It is called when the record completes successfully otherwise.
+            
+            VideoScreenRecorder.shared.startRecording(with: UUID().uuidString, windowsToSkip: [self.stopButtonWindow.overlayWindow], startHandler: { [weak self] in
+                DispatchQueue.main.async {
+                    self?.startTimer()
+                }
+            }, completionHandler: { [weak self] url, error in
+                DispatchQueue.main.async {
+                    if let error = error {
+                        self?.present(error: error)
+                    }
+                    self?.timer?.invalidate()
+                    self?.tableView.reloadData()
+                    self?.descriptionLabel.text = "Shake your device to start recording..."
+                }
+            })
+        }
+    }
 
-	override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
-		if let event = event, event.subtype == .motionShake {
-
-			// Start recording, the framework will internally choose the most appropriate method to record the video. If iOS 11+ will relly on
-			// ReplayKit, if prior version will take a batch of screenshots and use them to encode the video.
-			//
-			// The 'startHandler' callback is called as soon as the Framework has successfully started to record video; for instance right after
-			// the user has granted the permission. It may never be called if recording doesn't start successfully.
-			//
-			// The 'completionHandler' callbak is called if there is an error (possibly immediately upon trying to start recording, e.g. if user
-			// denies the permission). It is called when the record completes successfully otherwise.
-
-			VideoScreenRecorder.shared.startRecording(with: UUID().uuidString, windowsToSkip: [self.stopButtonWindow.overlayWindow], startHandler: { [weak self] in
-				DispatchQueue.main.async {
-					self?.startTimer()
-				}
-			}, completionHandler: { [weak self] url, error in
-				DispatchQueue.main.async {
-					if let error = error {
-						self?.present(error: error)
-					}
-					self?.timer?.invalidate()
-					self?.tableView.reloadData()
-					self?.descriptionLabel.text = "Shake your device to start recording..."
-				}
-			})
-		}
-	}
+//    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+//		if let event = event, event.subtype == .motionShake {
+//
+//			// Start recording, the framework will internally choose the most appropriate method to record the video. If iOS 11+ will relly on
+//			// ReplayKit, if prior version will take a batch of screenshots and use them to encode the video.
+//			//
+//			// The 'startHandler' callback is called as soon as the Framework has successfully started to record video; for instance right after
+//			// the user has granted the permission. It may never be called if recording doesn't start successfully.
+//			//
+//			// The 'completionHandler' callbak is called if there is an error (possibly immediately upon trying to start recording, e.g. if user
+//			// denies the permission). It is called when the record completes successfully otherwise.
+//
+//			VideoScreenRecorder.shared.startRecording(with: UUID().uuidString, windowsToSkip: [self.stopButtonWindow.overlayWindow], startHandler: { [weak self] in
+//				DispatchQueue.main.async {
+//					self?.startTimer()
+//				}
+//			}, completionHandler: { [weak self] url, error in
+//				DispatchQueue.main.async {
+//					if let error = error {
+//						self?.present(error: error)
+//					}
+//					self?.timer?.invalidate()
+//					self?.tableView.reloadData()
+//					self?.descriptionLabel.text = "Shake your device to start recording..."
+//				}
+//			})
+//		}
+//	}
 
 	deinit {
 		self.timer?.invalidate()

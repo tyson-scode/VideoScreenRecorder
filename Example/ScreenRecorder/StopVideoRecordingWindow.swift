@@ -29,7 +29,7 @@ internal final class StopVideoRecordingWindow {
 		self.stopButton.addTarget(self, action: #selector(stopRecording), for: .touchUpInside)
 
 		self.overlayWindow.addSubview(self.stopButton)
-		self.overlayWindow.windowLevel = CGFloat.greatestFiniteMagnitude
+        self.overlayWindow.windowLevel = UIWindow.Level(rawValue: CGFloat.greatestFiniteMagnitude)
 
 		self.overlayWindow.backgroundColor = .clear
 		self.overlayWindow.frame = CGRect(x: UIScreen.main.bounds.width - 90.0,
@@ -47,7 +47,7 @@ internal final class StopVideoRecordingWindow {
 		pulseAnimation.duration = 0.5
 		pulseAnimation.fromValue = 1.0
 		pulseAnimation.toValue = 0.8
-		pulseAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        pulseAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
 		pulseAnimation.autoreverses = true
 		pulseAnimation.repeatCount = .greatestFiniteMagnitude
 		self.overlayWindow.layer.add(pulseAnimation, forKey: self.pulseAnimationUniqueIdentifier)
